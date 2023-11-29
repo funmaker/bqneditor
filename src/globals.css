@@ -1,0 +1,40 @@
+
+@font-face {
+  font-family: BQN386;
+  src: url(static/BQN386.ttf);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--text-color);
+  font-family: BQN386, Consolas, monospace;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.syn-head { color: var(--syn-head); }
+.syn-value { color: var(--syn-value); }
+.syn-function { color: var(--syn-function); }
+.syn-modifier { color: var(--syn-modifier); }
+.syn-modifier2 { color: var(--syn-modifier2); }
+.syn-gets { color: var(--syn-gets); }
+.syn-paren { color: var(--syn-paren); }
+.syn-ligature { color: var(--syn-ligature); }
+.syn-separator { color: var(--syn-separator); }
+.syn-bracket { color: var(--syn-bracket); }
+.syn-brace { color: var(--syn-brace); }
+.syn-nothing { color: var(--syn-nothing); }
+.syn-number { color: var(--syn-number); }
+.syn-comment { color: var(--syn-comment); }
+.syn-string { color: var(--syn-string); }
+.error { color: var(--error); }

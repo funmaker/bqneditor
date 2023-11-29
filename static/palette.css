@@ -1,0 +1,27 @@
+
+/* From https://mlochbaum.github.io/BQN/try.html */
+:root {
+  --syn-head: #b2b9bb;
+  --syn-value: #b2b9bb;
+  --syn-function: #3aa548;
+  --syn-modifier: #93428b;
+  --syn-modifier2: #998819;
+  --syn-gets: #cccdcb;
+  --syn-paren: #5a524a;
+  --syn-ligature: #9c7dc1;
+  --syn-separator: #9c7dc1;
+  --syn-bracket: #9c7dc1;
+  --syn-brace: #862f9e;
+  --syn-nothing: #a73227;
+  --syn-number: #a73227;
+  --syn-comment: #3f3daa;
+  --syn-string: #3e99ab;
+
+  --background: #202023;
+  --editor-bg: #08080c;
+  --text-color: #aaaaaa;
+  --caret-color: #ffffff;
+  --border: #646464;
+  --hover: #113b62;
+  --error: #bb0e0e;
+}
