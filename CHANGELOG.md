@@ -4,7 +4,7 @@
 
 <!-- TODO END -->
 
-# Unreleased
+# v2.0.1
 
 - Fixed scroll bug finally maybe
 
