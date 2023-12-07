@@ -4,7 +4,7 @@
 
 <!-- TODO END -->
 
-# Unreleased
+# v2.0.0
 
 - Added settings and configurable key binds
 - Added key hints to glyphs
