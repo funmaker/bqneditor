@@ -3,7 +3,7 @@
 
 <!-- TODO END -->
 
-# Unreleased
+# v2.0.2
 
 - Added editor version in Help modal
 - Added GitHub actions for building
