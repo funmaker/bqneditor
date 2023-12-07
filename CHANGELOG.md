@@ -4,9 +4,16 @@
 
 <!-- TODO END -->
 
+# Unreleased
+
+- README.md improvements
+- Added editor version in Help modal
+
+
 # v2.0.1
 
 - Fixed scroll bug finally maybe
+
 
 # v2.0.0
 
