@@ -1,6 +1,6 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
-import { KeyAction, KeyBind } from "../../hooks/useSettings";
+import { KeyAction } from "../../hooks/useSettings";
 import glyphs from "../../bqn/glyphs";
 import useApp from "../../hooks/useApp";
 import Code from "./Code";
@@ -10,9 +10,19 @@ const MOD_KEYS = ["Shift", "Control", "Alt", "AltGraph", "CapsLock", "Fn", "FnLo
 export default function Editor() {
   const app = useApp();
   const code = app.code.useWatch();
-  const lines = useMemo(() => code.split("\n").length, [code]);
+  const [height, setHeight] = useState<number | null>(null);
   
-  const onChange = useCallback((ev: React.ChangeEvent<HTMLTextAreaElement>) => app.code.set(ev.currentTarget.value), [app.code]);
+  const onChange = useCallback((ev: React.ChangeEvent<HTMLTextAreaElement>) => {
+    app.code.set(ev.currentTarget.value);
+    
+    const prevHeight = ev.currentTarget.style.height;
+    ev.currentTarget.style.height = "0";
+    const newHeight = ev.currentTarget.scrollHeight;
+    
+    setHeight(newHeight);
+    
+    ev.currentTarget.style.height = prevHeight;
+  }, [app.code]);
   
   const onKeyDown = useCallback((ev: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const keyBinds = Object.entries(app.settings.ref.current.keyBinds).map(([action, bind]) => [action as KeyAction, bind] as const);
@@ -87,12 +97,17 @@ export default function Editor() {
     }
   }, [app]);
   
+  const onScroll = useCallback((ev: React.UIEvent<HTMLTextAreaElement>) => {
+    ev.currentTarget.scrollTop = 0;
+    ev.currentTarget.scrollLeft = 0;
+  }, []);
+  
   return (
     <StyledEditor>
       <StyledCode>{code}</StyledCode>
       <StyledTextArea autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"
-                      value={code} rows={lines}
-                      onChange={onChange} onKeyDown={onKeyDown}
+                      value={code} onChange={onChange} onKeyDown={onKeyDown} onScroll={onScroll}
+                      style={{ height: height ? height + "px" : undefined }}
                       ref={app.code.inputRef} />
     </StyledEditor>
   );

@@ -4,6 +4,10 @@
 
 <!-- TODO END -->
 
+# Unreleased
+
+- Fixed scroll bug finally maybe
+
 # v2.0.0
 
 - Added settings and configurable key binds
