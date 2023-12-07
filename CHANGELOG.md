@@ -1,13 +1,13 @@
 
 # TODO
 
-
 <!-- TODO END -->
 
 # Unreleased
 
-- README.md improvements
 - Added editor version in Help modal
+- Added GitHub actions for building
+- README.md improvements
 
 
 # v2.0.1
