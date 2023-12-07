@@ -14,12 +14,17 @@ html, body, #root {
   height: 100%;
 }
 
-body {
+:root {
   background: var(--background);
   color: var(--text-color);
   font-family: BQN386, Consolas, monospace;
   font-size: 20px;
   line-height: 1.4;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
 }
 
 .syn-head { color: var(--syn-head); }

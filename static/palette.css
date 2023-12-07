@@ -22,6 +22,12 @@
   --text-color: #aaaaaa;
   --caret-color: #ffffff;
   --border: #646464;
+  --light-border: #3e4556;
   --hover: #113b62;
   --error: #bb0e0e;
+  --button-color: #0f1d31;
+  --button-hover: #172e50;
+  --button-press: #21487e;
+  --button-text-active: #1B94D1;
+  --link-color: #1b94d1;
 }

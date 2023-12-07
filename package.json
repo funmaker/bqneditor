@@ -1,6 +1,6 @@
 {
   "name": "bqneditor",
-  "version": "1.0.0",
+  "version": "2.0.0-dev",
   "description": "BQN Editor",
   "author": "Fun Maker <funmaker95@gmail.com>",
   "license": "MIT",
@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "core-js": "^3.33.1",
+    "markdown-to-jsx": "^7.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-components": "^6.1.0"

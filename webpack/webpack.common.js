@@ -52,9 +52,10 @@ module.exports = {
         ],
       }, {
         test: /\.bqn$/i,
-        use: [
-          "raw-loader"
-        ],
+        use: "raw-loader",
+      }, {
+        test: /\.md$/i,
+        use: "raw-loader",
       }
     ],
   },

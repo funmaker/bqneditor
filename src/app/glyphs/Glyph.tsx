@@ -1,14 +1,14 @@
 import React, { useCallback, useState } from "react";
 import styled, { css } from "styled-components";
-import useBQN from "../../bqn/useBQN";
 import { Glyph as GlyphDef } from "../../bqn/glyphs";
 
 interface GlyphProps {
   glyph: GlyphDef;
+  showKey?: boolean;
+  insert: (glyph: string, paren?: string) => void;
 }
 
-export function Glyph({ glyph }: GlyphProps) {
-  const { insert } = useBQN();
+export function Glyph({ glyph, showKey, insert }: GlyphProps) {
   const [side, setSide] = useState<"left" | "right">("left");
   
   const onMouseEnter = useCallback((ev: React.MouseEvent) => {
@@ -23,15 +23,22 @@ export function Glyph({ glyph }: GlyphProps) {
     } else if(ev.button === 1) {
       window.open(glyph.help, "_blank");
     }
-  }, [glyph.glyph, glyph.help, insert]);
+  }, [insert, glyph.glyph, glyph.paren, glyph.help]);
   
   let hint = glyph.hint;
   if(hint && glyph.key) hint += `\n\\${glyph.key}`;
+  
+  let key;
+  if(showKey && glyph.key) {
+    if(glyph.key === " ") key = "␣";
+    else key = glyph.key;
+  }
   
   return (
     <GlyphBase className={`syn-${glyph.type}`}
                side={side}
                data-hint={hint}
+               data-key={key}
                onMouseEnter={onMouseEnter}
                onMouseDown={onMouseDown}>
       {glyph.glyph}
@@ -45,6 +52,17 @@ export const GlyphBase = styled.span<{ side?: "left" | "right" }>`
   padding: 0.1em 0.2em;
   cursor: pointer;
   transition: background-color 0.15s ease;
+
+  &[data-key]::before {
+    content: attr(data-key);
+    color: var(--text-color);
+    position: absolute;
+    bottom: -0.25em;
+    right: 0;
+    font-size: 75%;
+    text-shadow: -1px -1px 0 var(--background);
+    font-weight: bold;
+  }
   
   &:hover {
     background-color: var(--hover);

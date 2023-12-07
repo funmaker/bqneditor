@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled, { CSSProperties } from "styled-components";
-import Button from "../components/Button";
-import examples, { Directory } from "../utils/examples";
-import useBQN from "../bqn/useBQN";
+import Button from "../../components/Button";
+import examples, { Directory } from "../../utils/examples";
+import useApp from "../../hooks/useApp";
 
 export default function Examples() {
   const [open, setOpen] = useState(false);
@@ -20,7 +20,7 @@ export default function Examples() {
     return () => document.removeEventListener("click", onClick);
   }, [open]);
   
-  return <DirectoryItem name="Examples" content={examples} direction="bottom" as={Button} open={open} onClick={onClick} />;
+  return <DirectoryItem name="Examples" content={examples} direction="bottom" as={Button} title="Example programs" open={open} onClick={onClick} />;
 }
 
 type Direction = "top" | "right" | "bottom" | "left";
@@ -78,9 +78,9 @@ interface FileItemProps {
 }
 
 function FileItem({ name, content }: FileItemProps) {
-  const { setCode } = useBQN();
+  const app = useApp();
   
-  const onClick = useCallback(() => setCode(content), [content, setCode]);
+  const onClick = useCallback(() => app.code.set(content, true), [content, app.code]);
   
   return <StyledItem onClick={onClick}>{name}</StyledItem>;
 }
@@ -95,13 +95,14 @@ const triangles: Record<Direction, string> = {
 interface DirectoryItemProps {
   as?: React.ElementType<React.ComponentProps<typeof Button>>;
   name: string;
+  title?: string;
   content: Directory;
   direction: Direction;
   open: boolean;
   onClick: (name: string) => void;
 }
 
-function DirectoryItem({ as, name, content, direction, open, onClick: onClickProp }: DirectoryItemProps) {
+function DirectoryItem({ as, name, title, content, direction, open, onClick: onClickProp }: DirectoryItemProps) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   
   const onClick = useCallback((ev: React.MouseEvent) => {
@@ -115,7 +116,7 @@ function DirectoryItem({ as, name, content, direction, open, onClick: onClickPro
   
   return (
     <>
-      <C active={open} onClick={onClick} ref={buttonRef}>{name} {triangles[direction][+open]}</C>
+      <C active={open} title={title} onClick={onClick} ref={buttonRef}>{name} {triangles[direction][+open]}</C>
       {open && <List directory={content} parent={buttonRef} direction={direction} />}
     </>
   );

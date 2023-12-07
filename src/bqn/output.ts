@@ -11,7 +11,7 @@ export interface BQNOutput {
   audio?: Blob;
 }
 
-export function parseOutput(raw: any, delay: number, error = false, sampleRate = 8000) {
+export function parseOutput(raw: any, delay: number, error = false, sampleRate = 8000, multimedia = true) {
   console.log(raw, sampleRate);
   
   const output: BQNOutput = {
@@ -22,7 +22,8 @@ export function parseOutput(raw: any, delay: number, error = false, sampleRate =
   };
   if(error) {
     output.text = bqn.fmtErr(raw);
-  } else if(isShapedNumArr(raw)
+  } else if(multimedia
+            && isShapedNumArr(raw)
             && (raw.sh.length === 2 || raw.sh.length === 3)
             && raw.sh[0] >= 10 && raw.sh[1] >= 10 && (raw.sh.length === 2 || raw.sh[2] === 3 || raw.sh[2] === 4)
             && raw.every(num => num >= 0 && num <= 255)) {
@@ -50,7 +51,8 @@ export function parseOutput(raw: any, delay: number, error = false, sampleRate =
     }
     
     output.image = imageData;
-  } else if(isShapedNumArr(raw)
+  } else if(multimedia
+            && isShapedNumArr(raw)
             && (raw.sh[0] > 64 || raw.sh[1] > 64)
             && (raw.sh.length === 1 || raw.sh.length === 2)
             && (raw.sh.length === 1 || raw.sh[0] === 2 || raw.sh[1] === 2)

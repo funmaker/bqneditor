@@ -14,8 +14,8 @@ export default React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
 });
 
 const StyledButton = styled.button<{ $active?: boolean }>`
-  border: 1px solid #3e4556;
-  background: #0f1d31;
+  border: 1px solid var(--light-border);
+  background: var(--button-color);
   transition: background-color 0.15s;
   color: var(--text-color);
   border-radius: 0.5em;
@@ -24,13 +24,14 @@ const StyledButton = styled.button<{ $active?: boolean }>`
   font-weight: bold;
   position: relative;
   padding: 0.25em;
+  min-width: 1.9em;
   
   &:hover, &:focus {
-    background: #172e50;
+    background: var(--button-hover);
   }
   
   &:active {
-    background: #21487e;
+    background: var(--button-press);
   }
   
   & + & {
@@ -38,6 +39,6 @@ const StyledButton = styled.button<{ $active?: boolean }>`
   }
   
   ${props => props.$active && css`
-    color: #1B94D1;
+    color: var(--button-text-active);
   `}
 `;
