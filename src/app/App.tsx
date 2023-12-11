@@ -33,7 +33,7 @@ const StyledApp = styled.div`
   align-items: stretch;
   height: 100%;
   width: 50em;
-  padding: 0.5em;
+  padding: 0 0.5em;
   margin: 0 auto;
   min-width: 20em;
   max-width: calc(100% - 4em);

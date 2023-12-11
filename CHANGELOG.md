@@ -1,7 +1,20 @@
 
 # TODO
 
+- CBQN
+- Autocomplete
+- FLines
+- Live preview
+
+
 <!-- TODO END -->
+
+# Unreleased
+
+- Fixed scroll bug even more
+- Added keybind and button to fold output log
+- Line commenting now takes indentation into account
+
 
 # v2.0.2
 

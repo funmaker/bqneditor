@@ -8,7 +8,8 @@ interface CodeProps {
   children: string;
 }
 
-export default function Code({ className, inline, children }: CodeProps) {
+// eslint-disable-next-line prefer-arrow-callback
+export default React.forwardRef<HTMLElement, CodeProps>(function Code({ className, inline, children }, ref) {
   const tokens = useMemo(() => tokenize(children), [children]);
   
   const colored = tokens.map((token, id) => {
@@ -20,11 +21,11 @@ export default function Code({ className, inline, children }: CodeProps) {
   });
   
   return (
-    <StyledCode className={className} as={inline ? "span" : "div"} $inline={inline}>
+    <StyledCode className={className} as={inline ? "span" : "div"} $inline={inline} ref={ref}>
       {colored}
     </StyledCode>
   );
-}
+});
 
 
 const StyledCode = styled.div<{ $inline?: boolean }>`

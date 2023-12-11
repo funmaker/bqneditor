@@ -127,11 +127,17 @@ export function useCodeState(input: AppInputState, output: AppOutputState, setti
   }, [mapLines]);
   
   const commentLine = useCallback(() => {
-    mapLines(lines => (
-      lines.every(line => line.startsWith("#"))
-        ? lines.map(line => line.slice(1))
-        : lines.map(line => "#" + line)
-    ));
+    mapLines(lines => {
+      const level = lines.map(line => line.match(/^ */)?.at(0)?.length || 0)
+                          .reduce((acc, val) => Math.min(acc, val));
+      const indent = " ".repeat(level);
+      
+      if(lines.every(line => line.slice(level).startsWith("#"))) {
+        return lines.map(line => indent + line.slice(level + 1));
+      } else {
+        return lines.map(line => indent + "#" + line.slice(level));
+      }
+    });
   }, [mapLines]);
   
   const state = useMemo<AppCodeState>(() => ({
@@ -145,7 +151,7 @@ export function useCodeState(input: AppInputState, output: AppOutputState, setti
     useWatch: useCode,
     ref: codeRef,
     inputRef,
-  }), [codeRef, commentLine, insert, run, setCodeEx]);
+  }), [codeRef, commentLine, indentLine, insert, run, setCodeEx]);
   
   return [code, state];
 }

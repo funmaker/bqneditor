@@ -11,6 +11,7 @@ export enum KeyAction {
   OPEN = "open",
   OPEN_INPUT = "openInput",
   COMMENT_LINE = "commentLine",
+  FOLD_OUTPUTS = "foldOutputs",
 }
 
 export interface KeyBind {
@@ -31,6 +32,7 @@ export interface Settings {
     showExtra: boolean;
   };
   output: {
+    show: boolean;
     persist: boolean;
     wrap: boolean;
     multimedia: boolean;
@@ -47,6 +49,7 @@ const defaultSettings: Settings = {
     showExtra: false,
   },
   output: {
+    show: true,
     persist: false,
     wrap: false,
     multimedia: true,
@@ -59,6 +62,7 @@ const defaultSettings: Settings = {
     [KeyAction.OPEN]:        { key: "o", ctrl: true },
     [KeyAction.OPEN_INPUT]:   { key: "i", ctrl: true },
     [KeyAction.COMMENT_LINE]: { key: "/", ctrl: true },
+    [KeyAction.FOLD_OUTPUTS]: { key: "Escape" },
     /* eslint-enable key-spacing */
   },
 };

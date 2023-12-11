@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { KeyAction } from "../../hooks/useSettings";
 import glyphs from "../../bqn/glyphs";
@@ -10,19 +10,10 @@ const MOD_KEYS = ["Shift", "Control", "Alt", "AltGraph", "CapsLock", "Fn", "FnLo
 export default function Editor() {
   const app = useApp();
   const code = app.code.useWatch();
+  const codeRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState<number | null>(null);
   
-  const onChange = useCallback((ev: React.ChangeEvent<HTMLTextAreaElement>) => {
-    app.code.set(ev.currentTarget.value);
-    
-    const prevHeight = ev.currentTarget.style.height;
-    ev.currentTarget.style.height = "0";
-    const newHeight = ev.currentTarget.scrollHeight;
-    
-    setHeight(newHeight);
-    
-    ev.currentTarget.style.height = prevHeight;
-  }, [app.code]);
+  const onChange = useCallback((ev: React.ChangeEvent<HTMLTextAreaElement>) => app.code.set(ev.currentTarget.value), [app.code]);
   
   const onKeyDown = useCallback((ev: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const keyBinds = Object.entries(app.settings.ref.current.keyBinds).map(([action, bind]) => [action as KeyAction, bind] as const);
@@ -56,6 +47,7 @@ export default function Editor() {
         case KeyAction.OPEN: app.code.open(); break;
         case KeyAction.OPEN_INPUT: app.input.open(); break;
         case KeyAction.COMMENT_LINE: app.code.commentLine(); break;
+        case KeyAction.FOLD_OUTPUTS: app.settings.set("output.show", show => !show); break;
         default: console.error("Unhandled key action: " + action);
       }
       
@@ -102,9 +94,14 @@ export default function Editor() {
     ev.currentTarget.scrollLeft = 0;
   }, []);
   
+  useEffect(() => {
+    if(!codeRef.current) return;
+    setHeight(codeRef.current.clientHeight);
+  }, [code]);
+  
   return (
     <StyledEditor>
-      <StyledCode>{code}</StyledCode>
+      <StyledCode ref={codeRef}>{code}</StyledCode>
       <StyledTextArea autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"
                       value={code} onChange={onChange} onKeyDown={onKeyDown} onScroll={onScroll}
                       style={{ height: height ? height + "px" : undefined }}
@@ -148,4 +145,9 @@ const StyledCode = styled(Code)`
   width: 100%;
   min-height: 100%;
   padding: 0.5em;
+  
+  &::after {
+    content: " ";
+    display: inline;
+  }
 `;

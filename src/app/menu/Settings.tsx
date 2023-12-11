@@ -45,6 +45,7 @@ export default function Settings() {
       <KeyBindRow path="keyBinds.openInput"   useWatch={app.settings.useWatch} label="Upload input file" />
       <KeyBindRow path="keyBinds.save"        useWatch={app.settings.useWatch} label="Download code" />
       <KeyBindRow path="keyBinds.commentLine" useWatch={app.settings.useWatch} label="(Un)Comment lines" />
+      <KeyBindRow path="keyBinds.foldOutputs" useWatch={app.settings.useWatch} label="Hide output log" />
     </StyledModal>
   );
   /* eslint-enable react/jsx-props-no-multi-spaces */
