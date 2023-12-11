@@ -9,7 +9,7 @@
 
 <!-- TODO END -->
 
-# Unreleased
+# v2.1.0
 
 - Fixed scroll bug even more
 - Added keybind and button to fold output log
