@@ -16,6 +16,7 @@ export enum TokenType {
   NUMBER = "number",
   COMMENT = "comment",
   STRING = "string",
+  NEW_LINE = "newLine",
 }
 
 interface Token {
@@ -24,6 +25,7 @@ interface Token {
 }
 
 const tokenTests = [
+  { test: "\n", type: TokenType.NEW_LINE },
   { test: /^\s+/u, type: null },
   { test: /^#[^\n]*/u, type: TokenType.COMMENT },
   { test: "+-×÷⋆√⌊⌈|¬∧∨<>≠=≤≥≡≢⊣⊢⥊∾≍⋈↑↓↕«»⌽⍉/⍋⍒⊏⊑⊐⊒∊⍷⊔!", type: TokenType.FUNCTION },
@@ -94,7 +96,7 @@ export default function tokenize(code: string) {
   
   const merged: Token[] = [];
   for(const token of tokens) {
-    if(merged.length > 0 && token.type === merged[merged.length - 1].type) {
+    if(merged.length > 0 && token.type === merged[merged.length - 1].type && token.type !== TokenType.NEW_LINE) {
       merged[merged.length - 1].content += token.content;
     } else {
       merged.push(token);

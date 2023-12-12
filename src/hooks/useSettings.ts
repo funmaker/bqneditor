@@ -12,6 +12,7 @@ export enum KeyAction {
   OPEN_INPUT = "openInput",
   COMMENT_LINE = "commentLine",
   FOLD_OUTPUTS = "foldOutputs",
+  FOLD_GLYPHS = "foldGlyphs",
 }
 
 export interface KeyBind {
@@ -31,10 +32,14 @@ export interface Settings {
     modHints: boolean;
     showExtra: boolean;
   };
+  editor: {
+    lineNumbers: boolean;
+  };
   output: {
     show: boolean;
-    persist: boolean;
     wrap: boolean;
+    persist: boolean;
+    showOnRun: boolean;
     multimedia: boolean;
   };
   keyBinds: Record<KeyAction, KeyBind | null>;
@@ -48,10 +53,14 @@ const defaultSettings: Settings = {
     modHints: true,
     showExtra: false,
   },
+  editor: {
+    lineNumbers: true,
+  },
   output: {
     show: true,
-    persist: false,
     wrap: false,
+    persist: false,
+    showOnRun: true,
     multimedia: true,
   },
   keyBinds: {
@@ -63,6 +72,7 @@ const defaultSettings: Settings = {
     [KeyAction.OPEN_INPUT]:   { key: "i", ctrl: true },
     [KeyAction.COMMENT_LINE]: { key: "/", ctrl: true },
     [KeyAction.FOLD_OUTPUTS]: { key: "Escape" },
+    [KeyAction.FOLD_GLYPHS]:  null,
     /* eslint-enable key-spacing */
   },
 };

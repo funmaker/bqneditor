@@ -9,6 +9,14 @@
 
 <!-- TODO END -->
 
+# Unreleased
+
+- Added line numbers
+- Added option to open outputs pane on run
+- Changed website description
+- Reduced default outputs height
+
+
 # v2.1.0
 
 - Fixed scroll bug even more

@@ -23,6 +23,9 @@ export default function Settings() {
         <ResetButton onClick={resetSettings}>Reset to defaults</ResetButton>
       </Row>
       
+      <Header><h4>Editor</h4></Header>
+      <CheckboxRow path="editor.lineNumbers"  useWatch={app.settings.useWatch} label="Show line Numbers" />
+      
       <Header><h4>Glyphs</h4></Header>
       <CheckboxRow path="glyphs.show"         useWatch={app.settings.useWatch} label="Show glyphs palette" />
       <CheckboxRow path="glyphs.modToggle"    useWatch={app.settings.useWatch} label="Glyph mod key acts as a toggle" />
@@ -33,6 +36,7 @@ export default function Settings() {
       <Header><h4>Output</h4></Header>
       <CheckboxRow path="output.wrap"       useWatch={app.settings.useWatch} label="Wrap long lines" />
       <CheckboxRow path="output.persist"    useWatch={app.settings.useWatch} label="Do not clear output log on run" />
+      <CheckboxRow path="output.showOnRun"  useWatch={app.settings.useWatch} label="Show output log on run" />
       <CheckboxRow path="output.multimedia" useWatch={app.settings.useWatch} label="Enable multimedia output" />
       
       <Header>
@@ -46,6 +50,7 @@ export default function Settings() {
       <KeyBindRow path="keyBinds.save"        useWatch={app.settings.useWatch} label="Download code" />
       <KeyBindRow path="keyBinds.commentLine" useWatch={app.settings.useWatch} label="(Un)Comment lines" />
       <KeyBindRow path="keyBinds.foldOutputs" useWatch={app.settings.useWatch} label="Hide output log" />
+      <KeyBindRow path="keyBinds.foldGlyphs"  useWatch={app.settings.useWatch} label="Hide glyph palette" />
     </StyledModal>
   );
   /* eslint-enable react/jsx-props-no-multi-spaces */

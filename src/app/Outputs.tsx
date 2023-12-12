@@ -37,7 +37,7 @@ export default function Outputs() {
 
 const StyledOutputs = styled.div<{ $fold?: boolean }>`
   position: relative;
-  height: 50vh;
+  height: 30vh;
   min-height: 2em;
   display: flex;
   flex-direction: column;

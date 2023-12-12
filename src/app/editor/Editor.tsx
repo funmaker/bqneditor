@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { KeyAction } from "../../hooks/useSettings";
 import glyphs from "../../bqn/glyphs";
 import useApp from "../../hooks/useApp";
@@ -11,6 +11,7 @@ export default function Editor() {
   const app = useApp();
   const code = app.code.useWatch();
   const codeRef = useRef<HTMLDivElement | null>(null);
+  const [lineNumbers] = app.settings.useWatch("editor.lineNumbers");
   const [height, setHeight] = useState<number | null>(null);
   
   const onChange = useCallback((ev: React.ChangeEvent<HTMLTextAreaElement>) => app.code.set(ev.currentTarget.value), [app.code]);
@@ -48,6 +49,7 @@ export default function Editor() {
         case KeyAction.OPEN_INPUT: app.input.open(); break;
         case KeyAction.COMMENT_LINE: app.code.commentLine(); break;
         case KeyAction.FOLD_OUTPUTS: app.settings.set("output.show", show => !show); break;
+        case KeyAction.FOLD_GLYPHS: app.settings.set("glyphs.show", show => !show); break;
         default: console.error("Unhandled key action: " + action);
       }
       
@@ -100,17 +102,19 @@ export default function Editor() {
   }, [code]);
   
   return (
-    <StyledEditor>
-      <StyledCode ref={codeRef}>{code}</StyledCode>
+    <StyledEditor $lineNumbers={lineNumbers}>
+      <StyledCode lineNumbers={lineNumbers} ref={codeRef}>
+        {code}
+      </StyledCode>
       <StyledTextArea autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"
                       value={code} onChange={onChange} onKeyDown={onKeyDown} onScroll={onScroll}
-                      style={{ height: height ? height + "px" : undefined }}
+                      style={{ height: height ? height + "px" : undefined }} $lineNumbers={lineNumbers}
                       ref={app.code.inputRef} />
     </StyledEditor>
   );
 }
 
-const StyledEditor = styled.div`
+const StyledEditor = styled.div<{ $lineNumbers?: boolean }>`
   position: relative;
   overflow: auto;
   background: var(--editor-bg);
@@ -119,7 +123,7 @@ const StyledEditor = styled.div`
   flex: 1;
 `;
 
-const StyledTextArea = styled.textarea`
+const StyledTextArea = styled.textarea<{ $lineNumbers?: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
@@ -136,6 +140,10 @@ const StyledTextArea = styled.textarea`
   overflow: hidden;
   resize: none;
   
+  ${props => props.$lineNumbers && css`
+    padding-left: 4em;
+  `}
+  
   &:focus {
     outline: none;
   }
@@ -144,7 +152,6 @@ const StyledTextArea = styled.textarea`
 const StyledCode = styled(Code)`
   width: 100%;
   min-height: 100%;
-  padding: 0.5em;
   
   &::after {
     content: " ";

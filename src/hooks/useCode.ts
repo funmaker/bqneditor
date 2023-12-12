@@ -66,6 +66,7 @@ export function useCodeState(input: AppInputState, output: AppOutputState, setti
     };
     
     if(!settings.ref.current.output.persist) output.clear();
+    if(settings.ref.current.output.showOnRun) settings.set("output.show", true);
     
     try {
       const ret = bqn(codeRef.current);
