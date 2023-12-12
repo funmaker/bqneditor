@@ -1,6 +1,6 @@
 # BQN Editor
 
-Demo: [Demo](https://bqn.funmaker.moe)
+[Website](https://bqn.funmaker.moe)
 
 [Changelog](./CHANGELOG.md)
 
