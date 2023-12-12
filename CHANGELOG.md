@@ -9,7 +9,7 @@
 
 <!-- TODO END -->
 
-# Unreleased
+# v2.2.0
 
 - Added line numbers
 - Added option to open outputs pane on run
