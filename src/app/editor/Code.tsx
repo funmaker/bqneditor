@@ -38,6 +38,7 @@ const StyledCode = styled.div<{ $inline?: boolean; $lineNumbers?: boolean }>`
   font-family: BQN386, monospace;
   counter-reset: line;
   padding: 0.5em;
+  box-sizing: border-box;
   
   ${props => props.$inline && css`
     padding: 0.125em 0.25em;
@@ -58,5 +59,6 @@ const LineStart = styled.span`
     left: 0.5em;
     width: 2em;
     text-align: right;
+    color: var(--line-numbers);
   }
 `;

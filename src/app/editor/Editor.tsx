@@ -157,4 +157,8 @@ const StyledCode = styled(Code)`
     content: " ";
     display: inline;
   }
+
+  ${props => props.lineNumbers && css`
+    width: calc(100% - 3.5em);
+  `}
 `;

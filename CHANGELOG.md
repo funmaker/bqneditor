@@ -9,6 +9,13 @@
 
 <!-- TODO END -->
 
+# Unreleased
+
+- Added line numbers color customization to palette.css
+- Fixed another scroll bug
+- Fixed line numbers being skipped if a line ends with a whitespace
+
+
 # v2.2.0
 
 - Added line numbers

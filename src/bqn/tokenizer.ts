@@ -26,7 +26,7 @@ interface Token {
 
 const tokenTests = [
   { test: "\n", type: TokenType.NEW_LINE },
-  { test: /^\s+/u, type: null },
+  { test: /^[ \t]+/u, type: null },
   { test: /^#[^\n]*/u, type: TokenType.COMMENT },
   { test: "+-×÷⋆√⌊⌈|¬∧∨<>≠=≤≥≡≢⊣⊢⥊∾≍⋈↑↓↕«»⌽⍉/⍋⍒⊏⊑⊐⊒∊⍷⊔!", type: TokenType.FUNCTION },
   { test: "˙˜˘¨⌜⁼´˝`", type: TokenType.MODIFIER },
