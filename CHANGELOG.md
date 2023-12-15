@@ -9,7 +9,7 @@
 
 <!-- TODO END -->
 
-# Unreleased
+# v2.2.1
 
 - Added line numbers color customization to palette.css
 - Fixed another scroll bug
