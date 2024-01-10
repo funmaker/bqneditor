@@ -11,17 +11,23 @@ export interface BQNOutput {
   audio?: Blob;
 }
 
-export function parseOutput(raw: any, delay: number, error = false, sampleRate = 8000, multimedia = true) {
-  console.log(raw, sampleRate);
-  
+export interface OutputOptions extends Partial<BQNOutput> {
+  raw: any;
+  delay: number;
+  sampleRate?: number;
+  multimedia?: boolean;
+}
+
+export function parseOutput({ raw, error = false, sampleRate = 8000, multimedia = true, ...rest }: OutputOptions) {
   const output: BQNOutput = {
     id: Math.random().toString(16).slice(2),
     raw,
-    delay,
     error,
+    ...rest,
   };
+  
   if(error) {
-    output.text = bqn.fmtErr(raw);
+    output.text ??= bqn.fmtErr(raw);
   } else if(multimedia
             && isShapedNumArr(raw)
             && (raw.sh.length === 2 || raw.sh.length === 3)

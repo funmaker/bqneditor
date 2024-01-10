@@ -2,6 +2,7 @@ import { useCallback, useContext, useMemo, useRef } from "react";
 import bqn from "../bqn/bqn";
 import { parseOutput } from "../bqn/output";
 import { downloadFile, openFile } from "../utils/files";
+import { isShapedArr } from "../bqn/utils";
 import useLocalStorage from "./useLocalStorage";
 import { useRefCache } from "./useRefCache";
 import { AppCodeState, AppInputState, AppOutputState, AppSettingsState, CodeContext } from "./useApp";
@@ -9,6 +10,8 @@ import { AppCodeState, AppInputState, AppOutputState, AppSettingsState, CodeCont
 export default function useCode() {
   return useContext(CodeContext) || "";
 }
+
+const isBQNString = (x: any) => isShapedArr(x) && x.every(c => typeof c === "string");
 
 export function useCodeState(input: AppInputState, output: AppOutputState, settings: AppSettingsState): [string, AppCodeState] {
   const [code, setCode] = useLocalStorage("code", "");
@@ -47,18 +50,41 @@ export function useCodeState(input: AppInputState, output: AppOutputState, setti
   
   const run = useCallback(() => {
     const now = Date.now();
-    const inputLines = input.ref.current?.content?.split("\n")?.reverse();
+    const inputLines = input.ref.current?.content?.split("\n") || [];
+    if(inputLines.length > 0 && inputLines[inputLines.length - 1] === "") inputLines.pop();
+    const remainingInput = [...inputLines];
     const multimedia = settings.ref.current.output.multimedia;
-    if(inputLines && inputLines.length > 0 && inputLines[0] === "") inputLines.shift();
     
     let sampleRate = 8000;
     
-    bqn.sysvals.show = (raw: any) => output.append(parseOutput(raw, Date.now() - now, false, sampleRate, multimedia));
-    bqn.sysvals.getline = () => {
-      if(!inputLines || inputLines.length === 0) return bqn("@");
-      else return bqn.util.str(inputLines.pop() || "");
+    bqn.sysvals.show = (raw: any) => output.append(parseOutput({
+      raw,
+      delay: Date.now() - now,
+      sampleRate,
+      multimedia,
+    }));
+    
+    bqn.sysvals.out = (raw: any) => {
+      const bqnString = isBQNString(raw);
+      if(typeof raw !== "number" && !bqnString) throw new Error("•Out: 𝕩 must be a string or a number");
+      
+      output.append(parseOutput({
+        raw,
+        text: bqnString ? bqn.util.unstr(raw) : raw.toString(),
+        delay: Date.now() - now,
+        multimedia: false,
+      }));
     };
+    
+    bqn.sysvals.getline = () => {
+      if(remainingInput.length === 0) return bqn("@");
+      else return bqn.util.str(remainingInput.pop() || "");
+    };
+    
+    bqn.sysvals.flines = () => bqn.util.list(inputLines.map(line => bqn.util.str(line)));
+    
     bqn.sysvals.samplerate = () => sampleRate;
+    
     bqn.sysvals.setsamplerate = (raw: any) => {
       if(typeof raw !== "number") throw new Error("•SetSampleRate: 𝕩 must be a number");
       if(raw < 1 || raw >= 2 ** 32) throw new Error(`•SetSampleRate: 𝕩 must be between 1 and ${2 ** 32 - 1}`);
@@ -70,12 +96,16 @@ export function useCodeState(input: AppInputState, output: AppOutputState, setti
     
     try {
       const ret = bqn(codeRef.current);
-      if(ret) output.append(parseOutput(ret, Date.now() - now, false, sampleRate, multimedia));
+      if(ret !== undefined) bqn.sysvals.show(ret);
     } catch(err) {
       console.error(err);
-      output.append(parseOutput(err, Date.now() - now, true));
+      output.append(parseOutput({
+        raw: err,
+        delay: Date.now() - now,
+        error: true,
+      }));
     }
-  }, [codeRef, input.ref, output, settings.ref]);
+  }, [codeRef, input.ref, output, settings]);
   
   const mapLines = useCallback((callback: (lines: string[]) => string[]) => {
     const input = inputRef.current;

@@ -35,7 +35,7 @@ export default function Output({ output, wrap }: OutputProps) {
   } else if(!raw && output.audio) {
     return <StyledOutput ref={ref}><AudioOutput value={output.audio} actions={actions} /></StyledOutput>;
   } else {
-    return <StyledOutput ref={ref}><TextOutput value={output.text ?? output.raw} actions={actions} wrap={wrap} /></StyledOutput>;
+    return <StyledOutput ref={ref}><TextOutput text={output.text} value={output.raw} actions={actions} wrap={wrap} /></StyledOutput>;
   }
 }
 
@@ -62,25 +62,24 @@ interface GenericOutputProps<T> {
 const maxLineLen = 1000;
 const maxLines = 15;
 
-function TextOutput({ value, actions, wrap }: GenericOutputProps<any>) {
+function TextOutput({ text, value, actions, wrap }: GenericOutputProps<any> & { text?: string }) {
   const [expand, setExpand] = useState(false);
   
-  const text = useMemo(() => {
+  const displayText = useMemo(() => {
     try {
-      if(typeof value === "string") return value;
-      else return formatOutput(value);
+      return text || formatOutput(value);
     } catch(err) {
       return (err as Error).message;
     }
-  }, [value]);
+  }, [text, value]);
   
   let output;
   let overflow = false;
   if(expand) {
-    output = text;
+    output = displayText;
     overflow = true;
   } else {
-    const lines = text.split("\n", maxLines + 1);
+    const lines = displayText.split("\n", maxLines + 1);
     if(lines.length > maxLines) {
       lines[maxLines] = "...";
       overflow = true;

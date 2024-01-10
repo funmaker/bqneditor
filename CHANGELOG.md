@@ -9,6 +9,13 @@
 
 <!-- TODO END -->
 
+# Unreleased
+
+- Added `•Out` and `•FLines`
+- Fixed `•Show` not formatting strings and the null character
+- Fixed falsify outputs not being included in the output logs
+
+
 # v2.2.1
 
 - Added line numbers color customization to palette.css
