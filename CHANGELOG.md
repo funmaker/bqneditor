@@ -9,7 +9,7 @@
 
 <!-- TODO END -->
 
-# Unreleased
+# v2.3.0
 
 - Added `•Out` and `•FLines`
 - Fixed `•Show` not formatting strings and the null character
