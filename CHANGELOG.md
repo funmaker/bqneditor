@@ -8,7 +8,7 @@
 
 <!-- TODO END -->
 
-# Unreleased
+# v2.3.2
 
 - Fixed bothered readme/help message about sample rate
 
