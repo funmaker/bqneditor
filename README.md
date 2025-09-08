@@ -1,5 +1,7 @@
 # BQN Editor
 
+<a href="https://github.com/funmaker/bqneditor"><img src="https://github.com/funmaker/bqneditor/actions/workflows/release_build.yml/badge.svg" height="23"></a>
+
 [Website](https://bqn.funmaker.moe)
 
 [Changelog](./CHANGELOG.md)
