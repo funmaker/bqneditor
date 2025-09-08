@@ -43,7 +43,7 @@ const tokenTests = [
   { test: "⟨⟩[]", type: TokenType.BRACKET },
   { test: "‿", type: TokenType.LIGATURE },
   { test: /^"[^"]*"/u, type: TokenType.STRING },
-  { test: /^'[^']*'/u, type: TokenType.STRING },
+  { test: /^'.[^']*'/u, type: TokenType.STRING },
   { test: /^_𝕣_/u, type: TokenType.MODIFIER_2 },
   { test: /^_𝕣/u, type: TokenType.MODIFIER },
   { test: /^𝕣/u, type: TokenType.VALUE },

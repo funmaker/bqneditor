@@ -3,11 +3,15 @@
 
 - CBQN
 - Autocomplete
-- FLines
 - Live preview
 
 
 <!-- TODO END -->
+
+# Unreleased
+
+- Fixed incorrect highlight of `'''` (#2)
+
 
 # v2.3.0
 
