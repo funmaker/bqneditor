@@ -8,6 +8,11 @@
 
 <!-- TODO END -->
 
+# Unreleased
+
+- Fixed bothered readme/help message about sample rate
+
+
 # v2.3.1
 
 - Fixed incorrect highlight of `'''` (#2)

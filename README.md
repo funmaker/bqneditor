@@ -23,7 +23,8 @@ Allowed shapes are: `h‿w` (grayscale) `h‿w‿3` (RGB) `h‿w‿4` (RGBA) whe
 Example grayscale gradient: `+´¨ ↕ 127‿127`
 
 Audio is represented as an array of at least 64 PCM samples from -1 to 1. It can be a list for mono audio, or an array
-of shape `s‿2` or `2‿s` for stereo audio. You can read and change sample rate using 
+of shape `s‿2` or `2‿s` for stereo audio. You can get and change sample rate using `•SampleRate 𝕩` and
+`•SetSampleRate 𝕩` respectively.
 
 Example sine wave: `•math.Sin 2 × π × 60 × ↕⊸÷ •SampleRate @`
 
