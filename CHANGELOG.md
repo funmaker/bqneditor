@@ -8,7 +8,7 @@
 
 <!-- TODO END -->
 
-# Unreleased
+# v2.3.1
 
 - Fixed incorrect highlight of `'''` (#2)
 
