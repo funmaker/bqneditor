@@ -8,7 +8,7 @@
 
 <!-- HELP START -->
 
-This is an unofficial online editor for the [BQN](https://mlochbaum.github.io/BQN/asdasd) programming language
+This is an unofficial online editor for the [BQN](https://mlochbaum.github.io/BQN/) programming language
 made by [Fun Maker](https://github.com/funmaker/). You can find the source code on [GitHub](https://github.com/funmaker/bqneditor).
 Currently it is using [bqn.js](https://github.com/mlochbaum/BQN/blob/master/docs/bqn.js) as the interpreter.
 
