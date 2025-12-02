@@ -8,6 +8,11 @@
 
 <!-- TODO END -->
 
+# v2.3.3
+
+- Fixed offician BQN link in README.md (#3)
+
+
 # v2.3.2
 
 - Fixed bothered readme/help message about sample rate
